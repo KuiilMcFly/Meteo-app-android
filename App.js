@@ -7,8 +7,16 @@ import AddCityModal from './components/AddCityModal';
 
 export default class extends React.Component {
   state = {
-    cities: ['Roma', 'Milano', 'Napoli', 'Catania', 'Parigi'],
+    cities: [],
     visible: false,
+  }
+
+  addCity = (city) => {
+    this.setState(prevState => {
+      return {
+        cities: prevState.cities.concat(city)
+      }
+    }, this.closeModal())
   }
 
   openModal = () => {
@@ -29,7 +37,7 @@ export default class extends React.Component {
     ))
     return (
       <View style={styles.container}>
-        <AddCityModal visible={this.state.visible} closeModal={this.closeModal}/>
+        <AddCityModal addCity={this.addCity} visible={this.state.visible} closeModal={this.closeModal}/>
         <Header title={'Meteo App'}/>
         <ScrollView contentContainerStyle={styles.cardContainer}>
           {cities}
