@@ -4,6 +4,7 @@ import React from 'react';
 import Header from './components/Header';
 import WeatherCard from './components/WeatherCard';
 import AddCityModal from './components/AddCityModal';
+import RoundButton from './components/RoundButton';
 
 export default class extends React.Component {
   state = {
@@ -42,7 +43,9 @@ export default class extends React.Component {
         <ScrollView contentContainerStyle={styles.cardContainer}>
           {cities}
         </ScrollView>
-        <Button title={'+'} onPress={this.openModal}/>
+        <View style={styles.roundButtonBox}>
+          <RoundButton plusButton={true} onPress={this.openModal}/>
+        </View>
         <StatusBar style="auto" />
       </View>
     );
@@ -52,6 +55,11 @@ export default class extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
+  },
+  roundButtonBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   cardContainer: {
