@@ -1,70 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, Modal, Button  } from 'react-native';
 import React from 'react';
-import Header from './components/Header';
-import WeatherCard from './components/WeatherCard';
-import AddCityModal from './components/AddCityModal';
-import RoundButton from './components/RoundButton';
+import { View, Text, Linking } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './screens/Home';
+import City from './screens/City';
 
-export default class extends React.Component {
-  state = {
-    cities: [],
-    visible: false,
-  }
+const Stack = createNativeStackNavigator();
 
-  addCity = (city) => {
-    this.setState(prevState => {
-      return {
-        cities: prevState.cities.concat(city)
-      }
-    }, this.closeModal())
-  }
-
-  openModal = () => {
-    this.setState({
-      visible: true,
-    })
-  }
-
-  closeModal = () => {
-    this.setState({
-      visible: false,
-    })
-  }
-
-  render() {
-    const cities = this.state.cities.map((city, index) => (
-      <WeatherCard key={index} title={city}/>
-    ))
-    return (
-      <View style={styles.container}>
-        <AddCityModal addCity={this.addCity} visible={this.state.visible} closeModal={this.closeModal}/>
-        <Header title={'Meteo App'}/>
-        <ScrollView contentContainerStyle={styles.cardContainer}>
-          {cities}
-        </ScrollView>
-        <View style={styles.roundButtonBox}>
-          <RoundButton plusButton={true} onPress={this.openModal}/>
-        </View>
-        <StatusBar style="auto" />
-      </View>
-    );
-  }
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="City" component={City} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    
-  },
-  roundButtonBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  cardContainer: {
-    alignItems: 'center',
-    flex:1,
-    marginTop:20,
-  },
-});
+export default App;

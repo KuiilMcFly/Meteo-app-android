@@ -6,9 +6,21 @@ class AddCityModal extends React.Component {
   state = {
     text: "",
   }
+
   handleChangedText = (value) => {
     this.setState({
       text: value
+    })
+  }
+
+  addCityHandler = () => {
+    if(this.state.text.trim() === "") {
+      alert('Inserisci qualcosa!')
+      return
+    }
+    this.props.addCity(this.state.text)
+    this.setState({
+      text: ""
     })
   }
   render(){
@@ -17,8 +29,8 @@ class AddCityModal extends React.Component {
           <View style={styles.modalContainer}>
               <Text style={styles.title}>Città</Text>
             <View style={styles.inputBox}>
-              <TextInput style={styles.input} onChangeText={this.handleChangedText} value={this.state.text}/>
-              <Button title={'Add'} onPress={this.props.addCity.bind(this, this.state.text)}/>
+              <TextInput placeholder='Aggiungi città' style={styles.input} onChangeText={this.handleChangedText} value={this.state.text}/>
+              <Button title={'Add'} onPress={this.addCityHandler}/>
             </View>
 
               <RoundButton onPress={this.props.closeModal}/>
