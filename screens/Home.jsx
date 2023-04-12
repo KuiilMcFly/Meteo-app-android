@@ -45,7 +45,12 @@ export default class extends React.Component {
           {cities}
         </ScrollView>
         <View style={styles.roundButtonBox}>
-            <Button title={'vai a city'} onPress={() => this.props.navigation.navigate('City')}></Button>
+            <Button title={'vai a city'} onPress={() => this.props.navigation.navigate('City', 
+            {
+              cityName: 'Roma',
+              value: 'myValue',
+              
+            })}/>
           <RoundButton plusButton={true} onPress={this.openModal}/>
         </View>
         <StatusBar style="auto" />

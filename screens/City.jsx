@@ -1,12 +1,13 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 
-const City = () => {
+const City = (props) => {
+  const navigation = props.navigation;
   return (
     <View>
-        <Text>
-            Hello!!
-        </Text>
+        <Text>Hello from city</Text>
+        <Button title={'torna indietro'} onPress={() => navigation.popToTop()}/>
+        <Button title={'vai a city'} onPress={() => navigation.push('City')}/>
     </View>
   )
 }
