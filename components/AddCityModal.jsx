@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, View, Text, StyleSheet, Button, TextInput} from 'react-native';
+import {Modal, View, Text, StyleSheet, Button, TextInput, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import RoundButton from './RoundButton';
 
 class AddCityModal extends React.Component {
@@ -26,15 +26,23 @@ class AddCityModal extends React.Component {
   render(){
     return (
       <Modal visible={this.props.visible} animationType='slide'>
+        <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
           <View style={styles.modalContainer}>
               <Text style={styles.title}>Città</Text>
             <View style={styles.inputBox}>
-              <TextInput placeholder='Aggiungi città' style={styles.input} onChangeText={this.handleChangedText} value={this.state.text}/>
+              <TextInput 
+              placeholder='Aggiungi città' 
+              style={styles.input} 
+              onChangeText={this.handleChangedText} 
+              value={this.state.text}
+              autoCorrect={false}
+              />
               <Button title={'Add'} onPress={this.addCityHandler}/>
             </View>
 
               <RoundButton onPress={this.props.closeModal}/>
           </View>
+        </TouchableWithoutFeedback>
       </Modal>
     )
   }
