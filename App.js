@@ -20,7 +20,7 @@ const App = () => {
           }}}
           initialRouteName='Home'>
         <Stack.Screen options={{header: () => null}} name="Home" component={TabNavigation} />
-        <Stack.Screen options={({route}) => ({title: route.params.cityName})} name="City" component={City} />
+        <Stack.Screen options={({route}) => ({title: route.params.data.city.name})} name="City" component={City} />
       </Stack.Navigator>
     </NavigationContainer>
   );

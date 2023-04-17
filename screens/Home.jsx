@@ -4,8 +4,9 @@ import React from 'react';
 import WeatherCard from '../components/WeatherCard';
 import AddCityModal from '../components/AddCityModal';
 import RoundButton from '../components/RoundButton';
+import axios from 'axios';
 
-
+const APIKEY = '395eefba453ff13b9722f7fd5f986e70';
 
 export default class extends React.Component {
   state = {
@@ -13,12 +14,17 @@ export default class extends React.Component {
     visible: false,
   }
 
+ 
   addCity = (city) => {
-    this.setState(prevState => {
-      return {
-        cities: prevState.cities.concat(city)
-      }
-    }, this.closeModal())
+    axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${APIKEY}&lang=it`).then(data => {
+      this.setState(prevState => {
+        return {
+          cities: prevState.cities.concat(data.data)
+        }
+      }, this.closeModal());
+    }).catch(error => {
+      console.log(error)
+    })  
   }
 
   openModal = () => {
@@ -37,9 +43,19 @@ export default class extends React.Component {
   }
 
   render() {
-    const cities = this.state.cities.map((city, index) => (
-      <WeatherCard navigation={this.props.navigation} key={index} title={city} onPress={() => this.navigateToCity(city)}/>
-    ))
+    let cities = <Text>Sto caricando</Text>
+    if(this.state.cities){
+      console.log(this.state.cities)
+      cities = this.state.cities.map((city, index) => (
+        <WeatherCard 
+        navigation={this.props.navigation} 
+        key={index} 
+        title={city.name} 
+        onPress={() => this.navigateToCity(city)}
+        data={city}
+        />
+      ))
+    }
     return (
       <View style={styles.container}>
         <AddCityModal addCity={this.addCity} visible={this.state.visible} closeModal={this.closeModal}/>

@@ -5,13 +5,17 @@ const WeatherCard = (props) => {
 
   const navigation = props.navigation;
   const cityName = props.title;
+  console.log('from weather card', props.data);
 
  const goToCity = () => {
-  navigation.navigate('City', { cityName: cityName });
+  navigation.navigate('City', { 
+    cityName: cityName,
+    data: props.data,
+   });
 }
   return (
     <TouchableOpacity onPress={goToCity} style={styles.card}>
-        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.title}>{props.data.city.name}</Text>
     </TouchableOpacity>
   )
 }

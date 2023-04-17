@@ -1,11 +1,12 @@
 import React from 'react'
 import { View, Text, Button} from 'react-native'
 
-const City = (props) => {
-  const navigation = props.navigation;
+const City = ({route}) => {
+  const {data} = route.params
+  console.log('from city.js', data)
   return (
     <View>
-        <Text>Hello from city</Text>
+        <Text>Hello from {data.city.name}</Text>
        
     </View>
   )
