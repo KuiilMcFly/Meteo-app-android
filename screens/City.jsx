@@ -1,10 +1,14 @@
 import React from 'react'
 import { View, Text, Button, StyleSheet, ScrollView} from 'react-native'
 import WeatherTime from '../components/WeatherTime'
+import WeatherDay from '../components/WeatherDay'
 
 const City = ({route}) => {
   const {data} = route.params
-  console.log('from city.js', data)
+  console.log('from city.js', data);
+  const weatherTimeData = data.list.slice(0,9);
+  console.log('slice Data', weatherTimeData);
+  
   return (
     <View style={styles.container}>
 
@@ -25,7 +29,9 @@ const City = ({route}) => {
         </ScrollView>
 
         <View style={styles.daysContainer}>
-
+            <WeatherDay/>
+            <WeatherDay/>
+            <WeatherDay/>
         </View>
         
        
@@ -41,21 +47,22 @@ const styles = StyleSheet.create({
   },
   frontContainer:{
     flex: 3,
-    backgroundColor: 'red',
+    
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   scrollContainer:{
     flex: 1,
-    backgroundColor: 'blue',
+    
     width: '100%',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-  },
+    
+    },
   daysContainer:{
     flex: 2,
-    backgroundColor: 'green',
+    
     width: '100%',
   },
   cityTitle: {
