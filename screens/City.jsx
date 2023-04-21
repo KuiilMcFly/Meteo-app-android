@@ -5,33 +5,43 @@ import WeatherDay from '../components/WeatherDay'
 
 const City = ({route}) => {
   const {data} = route.params
-  console.log('from city.js', data);
+  const description = data.list[0].weather[0].description;
+  const actualTempereature = Math.floor(data.list[0].main.temp - 273);
+
+  //Weather day data
+ const WeatherDayData = data.list;
+ console.log(WeatherDayData);
+ const filteredDayData = WeatherDayData.filter(day => {
+  return day.dt_txt.includes('18:00:00')
+ })
+ const WeatherDays = filteredDayData.map((item, index) => (
+  <WeatherDay data={item} key={index}/>
+ ))
+
+
+  //Weather time data
   const weatherTimeData = data.list.slice(0,9);
-  console.log('slice Data', weatherTimeData);
-  
+  const WeathersTimes = weatherTimeData.map((item, index) => (
+    <WeatherTime data={item} key={index}/>
+  ))
+
   return (
     <View style={styles.container}>
 
         <View style={styles.frontContainer}>
           <Text style={styles.cityTitle}>{data.city.name}</Text>
-          <Text style={styles.weatherType}>Soleggiato</Text>
-          <Text style={styles.celsius}>21°</Text>
+          <Text style={styles.weatherType}>{description}</Text>
+          <Text style={styles.celsius}>{actualTempereature}°</Text>
         </View>
 
-        <ScrollView horizontal={true} style={styles.scrollContainer}>
-            <WeatherTime/>
-            <WeatherTime/>
-            <WeatherTime/>
-            <WeatherTime/>
-            <WeatherTime/>
-            <WeatherTime/>
-            <WeatherTime/>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={styles.scrollContainer}>
+            {WeathersTimes}
         </ScrollView>
 
         <View style={styles.daysContainer}>
-            <WeatherDay/>
-            <WeatherDay/>
-            <WeatherDay/>
+          <ScrollView>
+            {WeatherDays}
+          </ScrollView>
         </View>
         
        
@@ -54,7 +64,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer:{
     flex: 1,
-    
+    backgroundColor: '#2596be',
     width: '100%',
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -62,7 +72,7 @@ const styles = StyleSheet.create({
     },
   daysContainer:{
     flex: 2,
-    
+    backgroundColor: '#08b3c4',
     width: '100%',
   },
   cityTitle: {

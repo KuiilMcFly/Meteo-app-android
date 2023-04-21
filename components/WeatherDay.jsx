@@ -3,13 +3,19 @@ import { View, StyleSheet, Text } from 'react-native'
 import WeatherIcon from './WeatherIcon'
 
 const WeatherDay = (props) => {
+  const dayOfWeek = ['Domenica','Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+  const indexDay = new Date(props.data.dt_txt).getDay();
+  const day = dayOfWeek[indexDay];
+  const time = new Date (props.data.dt_txt).getHours();
+  const temperature = Math.floor(props.data.main.temp - 273);
+  const code = props.data.weather[0].icon;
+
   return (
     <View style={styles.container}>
-        <Text>Giorno</Text>
-        <WeatherIcon code={'11n'}/>
+        <Text>{day}</Text>
+        <WeatherIcon code={code}/>
         <View style={{flexDirection: 'row', marginTop: 3,}}>
-            <Text>23</Text>
-            <Text style={{marginLeft:5,}}>16</Text>
+            <Text>{temperature}°</Text>
         </View>
     </View>
   )

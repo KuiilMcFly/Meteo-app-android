@@ -3,11 +3,15 @@ import {View, Text, StyleSheet} from 'react-native'
 import WeatherIcon from './WeatherIcon'
 
 const WeatherTime = (props) => {
+  console.log(props.data);
+  const temperature = Math.floor(props.data.main.temp - 273);
+  const time = new Date (props.data.dt_txt).getHours();
+  const code = props.data.weather[0].icon;
   return (
     <View style={styles.container}>
-        <Text style={styles.time}>Data</Text>
-        <WeatherIcon code={'01n'}/>
-        <Text style={styles.temperature}>36</Text>
+        <Text style={styles.time}>{time}</Text>
+        <WeatherIcon code={code}/>
+        <Text style={styles.temperature}>{temperature}°</Text>
 
     </View>
   )
