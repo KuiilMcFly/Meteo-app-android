@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 
 const RoundButton = (props) => {
 
@@ -17,8 +17,8 @@ const RoundButton = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: 50,
-        height: 50,
+        width: Dimensions.get('window').height > 600 ? 50 : 30,
+        height: Dimensions.get('window').height > 600 ? 50 : 30,
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
 
     },
     plusImage: {
-        width: 30,
-        height: 30,
+        width: Dimensions.get('window').height > 600 ? 30 : 20,
+        height: Dimensions.get('window').height > 600 ? 30 : 20,
         tintColor: 'white',
     },
 })

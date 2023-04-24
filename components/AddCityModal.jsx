@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, View, Text, StyleSheet, Button, TextInput, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {Modal, View, Text, StyleSheet, Button, TextInput, TouchableWithoutFeedback, Keyboard, Dimensions} from 'react-native';
 import RoundButton from './RoundButton';
 
 class AddCityModal extends React.Component {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 
   input:{
     borderBottomWidth: 1,
-    width: '50%'
+    width: Dimensions.get('window').width / 2,
   },
 
   inputBox: {
