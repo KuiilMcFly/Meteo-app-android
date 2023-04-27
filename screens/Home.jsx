@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, Modal, Button  } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Modal, Button, FlatList  } from 'react-native';
 import React from 'react';
 import WeatherCard from '../components/WeatherCard';
 import AddCityModal from '../components/AddCityModal';
@@ -9,6 +9,7 @@ import axios from 'axios';
 const APIKEY = '395eefba453ff13b9722f7fd5f986e70';
 
 export default class extends React.Component {
+
   state = {
     cities: [],
     visible: false,
