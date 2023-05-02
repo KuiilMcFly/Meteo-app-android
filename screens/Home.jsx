@@ -5,71 +5,71 @@ import WeatherCard from '../components/WeatherCard';
 import AddCityModal from '../components/AddCityModal';
 import RoundButton from '../components/RoundButton';
 import axios from 'axios';
+import {useState, useCallback} from 'react'
 
 const APIKEY = '395eefba453ff13b9722f7fd5f986e70';
 
-export default class extends React.Component {
+const App = (props) => {
 
-  state = {
-    cities: [],
-    visible: false,
-  }
-
+  const [cities, setCities] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  
  
-  addCity = (city) => {
-    axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${APIKEY}&lang=it`).then(data => {
-      this.setState(prevState => {
-        return {
-          cities: prevState.cities.concat(data.data)
-        }
-      }, this.closeModal());
-    }).catch(error => {
-      console.log(error)
-    })  
+  const addCity = useCallback(async (city) => {
+    if (isFetching) return;
+    setIsFetching(true);
+    try {
+      const response = await axios.get(
+        `http://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${APIKEY}&lang=it`
+      );
+      const data = response.data;
+      await setCities((prevCities) => [...prevCities, data]);
+      await closeModal();
+      setIsFetching(false);
+    } catch (error) {
+      console.log(error);
+      setIsFetching(false);
+    }
+  }, []);
+
+  const openModal = () => {
+    setVisible(true)
   }
 
-  openModal = () => {
-    this.setState({
-      visible: true,
-    })
+  const closeModal = () => {
+    setVisible(false)
   }
 
-  closeModal = () => {
-    this.setState({
-      visible: false,
-    })
-  }
   navigateToCity = (city) => {
-    this.props.navigation.navigate('City', {cityName: city})
+    props.navigation.navigate('City', {cityName: city})
   }
 
-  render() {
-    let cities = <Text>Sto caricando</Text>
-    if(this.state.cities){
-      console.log(this.state.cities)
-      cities = this.state.cities.map((city, index) => (
+  
+    let newCities = <Text>Sto caricando</Text>
+    if(cities){
+      newCities = cities.map((city, index) => (
         <WeatherCard 
-        navigation={this.props.navigation} 
+        navigation={props.navigation} 
         key={index} 
         title={city.name} 
-        onPress={() => this.navigateToCity(city)}
+        onPress={() => navigateToCity(city)}
         data={city}
         />
       ))
     }
     return (
       <View style={styles.container}>
-        <AddCityModal addCity={this.addCity} visible={this.state.visible} closeModal={this.closeModal}/>
+        <AddCityModal addCity={addCity} visible={visible} closeModal={closeModal}/>
         <ScrollView contentContainerStyle={styles.cardContainer}>
-          {cities}
+          {newCities}
         </ScrollView>
         <View style={styles.roundButtonBox}>
-          <RoundButton plusButton={true} onPress={this.openModal}/>
+          <RoundButton plusButton={true} onPress={openModal}/>
         </View>
         <StatusBar style="auto" />
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -88,3 +88,6 @@ const styles = StyleSheet.create({
     marginTop:20,
   },
 });
+
+
+export default App;
