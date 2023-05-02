@@ -1,31 +1,27 @@
 import React from 'react'
 import {Modal, View, Text, StyleSheet, Button, TextInput, TouchableWithoutFeedback, Keyboard, Dimensions} from 'react-native';
 import RoundButton from './RoundButton';
+import { useState } from 'react';
 
-class AddCityModal extends React.Component {
-  state = {
-    text: "",
-  }
+const AddCityModal = (props) => {
 
-  handleChangedText = (value) => {
-    this.setState({
-      text: value
-    })
-  }
+  const [text, setText] = useState("");
 
-  addCityHandler = () => {
-    if(this.state.text.trim() === "") {
+  const handleChangedText = value => {
+    setText(value)
+  };
+
+  const addCityHandler = () => {
+    if(text.trim() === "") {
       alert('Inserisci qualcosa!')
       return
     }
-    this.props.addCity(this.state.text)
-    this.setState({
-      text: ""
-    })
-  }
-  render(){
+    props.addCity(text);
+    setText("")
+    };
+  
     return (
-      <Modal visible={this.props.visible} animationType='slide'>
+      <Modal visible={props.visible} animationType='slide'>
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
           <View style={styles.modalContainer}>
               <Text style={styles.title}>Città</Text>
@@ -33,20 +29,20 @@ class AddCityModal extends React.Component {
               <TextInput 
               placeholder='Aggiungi città' 
               style={styles.input} 
-              onChangeText={this.handleChangedText} 
-              value={this.state.text}
+              onChangeText={handleChangedText} 
+              value={text}
               autoCorrect={false}
               />
-              <Button title={'Add'} onPress={this.addCityHandler}/>
+              <Button title={'Add'} onPress={addCityHandler}/>
             </View>
 
-              <RoundButton onPress={this.props.closeModal}/>
+              <RoundButton onPress={props.closeModal}/>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
     )
   }
-}
+
 
 
 
