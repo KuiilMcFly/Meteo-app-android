@@ -16,8 +16,14 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
         headerStyle:{
-            backgroundColor: 'orange'
-          }}}
+            backgroundColor: 'orange',
+            marginTop: 10,
+          },
+          headerTitleContainerStyle: {
+            height: 50,
+            marginTop: 20,
+          }
+        }}
           initialRouteName='Home'>
         <Stack.Screen options={{header: () => null}} name="Home" component={TabNavigation} />
         <Stack.Screen options={({route}) => ({title: route.params.data.city.name})} name="City" component={City} />
@@ -42,6 +48,7 @@ const TabNavigation = () => {
         tabBarOptions ={{
           activeTintColor: 'orange',
           inactiveTintColor: 'gray',
+          
         }}>
         <Tab.Screen name='Home' component={Home} />
         <Tab.Screen name='Profile' component={Profile}/>
